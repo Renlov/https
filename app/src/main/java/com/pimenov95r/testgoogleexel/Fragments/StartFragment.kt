@@ -40,15 +40,13 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         call.enqueue(object : Callback<String> {
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                val response = response.body()
-                val date = response
-                Log.d("jopa", date.toString())
-                val json = JSONObject(date)
+                val responseData = response.body()
+                val json = JSONObject(responseData!!)
                 val arr = json.getJSONArray("result")
                 val ar = arr.getJSONArray(0)
 
-                Log.d("jopa", ar.getString(1))
-                Log.d("jopa", ar.getString(0))
+                Log.d("spectra", ar.getString(1))
+                Log.d("spectra", ar.getString(0))
 
                 bundle.putString("key", ar.getString(1))
 
