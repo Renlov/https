@@ -1,18 +1,17 @@
 package com.pimenov95r.testgoogleexel.Fragments
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.webkit.CookieSyncManager
+import android.webkit.CookieManager
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.pimenov95r.testgoogleexel.R
-import java.net.CookieManager
+import com.pimenov95r.testgoogleexel.Utils.Utils
 
 class BlackFragment : Fragment(R.layout.fragment_black) {
     private lateinit var linear : FrameLayout
@@ -25,8 +24,10 @@ class BlackFragment : Fragment(R.layout.fragment_black) {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE)
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         super.onActivityCreated(savedInstanceState)
         val test = WebView(requireContext())
         settingApp()
@@ -36,20 +37,22 @@ class BlackFragment : Fragment(R.layout.fragment_black) {
             settings.domStorageEnabled = falseCommand
         }
         test.webViewClient = WebViewClient()
+        test.webChromeClient = Utils()
         val text : String? = bundle.getString("key")
-        Log.d("spectra", text!!)
-        test.loadUrl(text)
+        test.loadUrl(text!!)
         linear.addView(test)
 
-        test.webViewClient = (object : WebViewClient(){
-            override fun onPageFinished(view: WebView?, url: String?) {
-                CookieSyncManager.getInstance().sync()
-                Toast.makeText(requireContext(), "Page loading complete", Toast.LENGTH_LONG).show();
-            }
-        })
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(test, true)
+        } else {
+            CookieManager.getInstance().setAcceptCookie(true)
+        }
     }
 
     private fun settingApp() {
         falseCommand = true
     }
+
+
 }

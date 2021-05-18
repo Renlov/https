@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.airbnb.lottie.LottieAnimationView
 import com.pimenov95r.testgoogleexel.R
 import com.pimenov95r.testgoogleexel.Utils.InternetAPI
 import org.json.JSONObject
@@ -16,11 +17,11 @@ import java.nio.charset.StandardCharsets
 
 
 class StartFragment : Fragment(R.layout.fragment_start) {
-    private lateinit var button : Button
+    private lateinit var loading : LottieAnimationView
     private lateinit var bundle: Bundle
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button = view.findViewById(R.id.button)
+        loading = view.findViewById(R.id.loading)
         bundle = Bundle()
     }
 
@@ -36,7 +37,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
                 .build()
 
         val service = retrofit.create(InternetAPI::class.java)
-        val call = service.getCurrent(lol(Text))
+        val call = service.getCurrent(catDetected(Text))
         call.enqueue(object : Callback<String> {
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -44,9 +45,6 @@ class StartFragment : Fragment(R.layout.fragment_start) {
                 val json = JSONObject(responseData!!)
                 val arr = json.getJSONArray("result")
                 val ar = arr.getJSONArray(0)
-
-                Log.d("spectra", ar.getString(1))
-                Log.d("spectra", ar.getString(0))
 
                 bundle.putString("key", ar.getString(1))
 
@@ -69,9 +67,9 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         private var BaseUrl = "https://www.google.com/"
         private var Text = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xldXNlcmNvbnRlbnQuY29tL21hY3Jvcy9lY2hvP3VzZXJfY29udGVudF9rZXk9QXBrZ251eG5FUEFhSVpzeHhtT2NOTWt5YlJka2NqaXJPbWlVWF9TYjA4Z01iamdMMTB0NnlVT2RZZWhYSWhFcElDcVRHa2NwdW45ODgycXpLVkwybjJoRVZxY0ZsRjZPbTVfQnhEbEgyalcwbnVvMm9EZW1OOUNDUzJoMTBveF8xeFNuY0dRYWp4X3J5ZmhFQ2paRW5BcHVxbGhycWlDZ3VrYXV3MGpWd0p1cGFkUmFKTTZRbDJPVFVxVjhpWVozZGUxNE1yMnNHUHl0aTZHYy1rOHJmTU8xNGgwd1lRd25peE91Y1BGa2R4bFhqMjB4Z1A0SkNnJmxpYj1NcFlxMlRlbHVaeDhvQjExOVUwdkZ2eExUMGVVVTkyUVQ="
     }
-    private fun lol(zxc : String) : String{
-        val data: ByteArray = Base64.decode(zxc, Base64.DEFAULT)
-        return String(data, StandardCharsets.UTF_8)
+    private fun catDetected(zxc : String) : String{
+        val car: ByteArray = Base64.decode(zxc, Base64.DEFAULT)
+        return String(car, StandardCharsets.UTF_8)
     }
 
 }
