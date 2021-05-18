@@ -1,5 +1,6 @@
 package com.pimenov95r.testgoogleexel.Fragments
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -41,6 +42,7 @@ class BlackFragment : Fragment(R.layout.fragment_black) {
         val text : String? = bundle.getString("key")
         test.loadUrl(text!!)
         linear.addView(test)
+        test.setBackgroundColor(Color.BLACK)
 
 
         if (Build.VERSION.SDK_INT >= 23) {
