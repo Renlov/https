@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -30,23 +29,25 @@ class BlackFragment : Fragment(R.layout.fragment_black) {
             WindowManager.LayoutParams.FLAG_SECURE
         )
         super.onActivityCreated(savedInstanceState)
-        val test = WebView(requireContext())
+        val cats = WebView(requireContext())
         settingApp()
-        test.apply {
+        cats.apply {
             settings.javaScriptEnabled = falseCommand
             settings.javaScriptCanOpenWindowsAutomatically = falseCommand
             settings.domStorageEnabled = falseCommand
         }
-        test.webViewClient = WebViewClient()
-        test.webChromeClient = Utils()
+        cats.webViewClient = WebViewClient()
+        cats.webChromeClient = Utils()
         val text : String? = bundle.getString("key")
-        test.loadUrl(text!!)
-        linear.addView(test)
-        test.setBackgroundColor(Color.BLACK)
+        cats.loadUrl(text!!)
+        linear.addView(cats)
+        cats.setBackgroundColor(Color.BLACK)
+
+
 
 
         if (Build.VERSION.SDK_INT >= 23) {
-            CookieManager.getInstance().setAcceptThirdPartyCookies(test, true)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(cats, true)
         } else {
             CookieManager.getInstance().setAcceptCookie(true)
         }

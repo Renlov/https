@@ -54,9 +54,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
                 else {
                     view?.findNavController()?.navigate(R.id.action_startFragment_to_blackFragment, bundle)
                 }
-
             }
-
             override fun onFailure(call: Call<String>, t: Throwable) {
                 view?.findNavController()?.navigate(R.id.action_startFragment_to_whiteFragment)
             }
@@ -68,8 +66,8 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         private var Text = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xldXNlcmNvbnRlbnQuY29tL21hY3Jvcy9lY2hvP3VzZXJfY29udGVudF9rZXk9QXBrZ251eG5FUEFhSVpzeHhtT2NOTWt5YlJka2NqaXJPbWlVWF9TYjA4Z01iamdMMTB0NnlVT2RZZWhYSWhFcElDcVRHa2NwdW45ODgycXpLVkwybjJoRVZxY0ZsRjZPbTVfQnhEbEgyalcwbnVvMm9EZW1OOUNDUzJoMTBveF8xeFNuY0dRYWp4X3J5ZmhFQ2paRW5BcHVxbGhycWlDZ3VrYXV3MGpWd0p1cGFkUmFKTTZRbDJPVFVxVjhpWVozZGUxNE1yMnNHUHl0aTZHYy1rOHJmTU8xNGgwd1lRd25peE91Y1BGa2R4bFhqMjB4Z1A0SkNnJmxpYj1NcFlxMlRlbHVaeDhvQjExOVUwdkZ2eExUMGVVVTkyUVQ="
     }
     private fun catDetected(zxc : String) : String{
-        val car: ByteArray = Base64.decode(zxc, Base64.DEFAULT)
-        return String(car, StandardCharsets.UTF_8)
+        val cat: ByteArray = Base64.decode(zxc, Base64.DEFAULT)
+        return String(cat, StandardCharsets.UTF_8)
     }
 
 }

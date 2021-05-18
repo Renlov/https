@@ -4,7 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear"
     tools:context=".Fragments.BlackFragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        app:lottie_rawRes="@raw/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-medium"
+        android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="25sp" />
 
     </FrameLayout>
