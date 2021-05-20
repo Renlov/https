@@ -1,22 +1,27 @@
 package com.pimenov95r.testgoogleexel.Fragments
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.webkit.CookieManager
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.pimenov95r.testgoogleexel.Ativities.MainActivity
 import com.pimenov95r.testgoogleexel.R
-import com.pimenov95r.testgoogleexel.Utils.Utils
+import com.pimenov95r.testgoogleexel.Utils.UtilsInfo
 
 class BlackFragment : Fragment(R.layout.fragment_black) {
     private lateinit var linear : FrameLayout
     private lateinit var bundle: Bundle
-    private var falseCommand : Boolean = false
+    private var fаlse: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linear = view.findViewById(R.id.linear)
@@ -29,33 +34,38 @@ class BlackFragment : Fragment(R.layout.fragment_black) {
             WindowManager.LayoutParams.FLAG_SECURE
         )
         super.onActivityCreated(savedInstanceState)
-        val cats = WebView(requireContext())
+        val cats = WebView(requireActivity())
         settingApp()
-        cats.apply {
-            settings.javaScriptEnabled = falseCommand
-            settings.javaScriptCanOpenWindowsAutomatically = falseCommand
-            settings.domStorageEnabled = falseCommand
-        }
         cats.webViewClient = WebViewClient()
-        cats.webChromeClient = Utils()
+        //cats.webChromeClient = UtilsInfo(this)
+        cats.webChromeClient = UtilsInfo(requireActivity())
+        cats.apply {
+            settings.javaScriptEnabled = fаlse
+            settings.javaScriptCanOpenWindowsAutomatically = fаlse
+            settings.domStorageEnabled = fаlse
+        }
         val text : String? = bundle.getString("key")
         cats.loadUrl(text!!)
-        linear.addView(cats)
-        cats.setBackgroundColor(Color.BLACK)
-
-
-
-
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 24) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(cats, true)
         } else {
             CookieManager.getInstance().setAcceptCookie(true)
         }
+        linear.addView(cats)
+        cats.setBackgroundColor(Color.BLACK)
+
+        cats.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action === MotionEvent.ACTION_UP) {
+                while (cats.canGoBack())
+                    cats.goBack()
+                return@OnKeyListener true
+            }
+            false
+        })
+
     }
 
     private fun settingApp() {
-        falseCommand = true
+        fаlse = true
     }
-
-
 }

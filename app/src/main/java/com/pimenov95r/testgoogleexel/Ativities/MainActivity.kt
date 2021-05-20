@@ -16,10 +16,10 @@ class MainActivity : AppCompatActivity() {
 
     }
     companion object {
-         var message: ValueCallback<Uri>? = null
-         var messageArray: ValueCallback<Array<Uri>>? = null
-         val REQUEST_SELECT_FILE = 921
-         val FILECHOOSER_RESULTCODE = 72
+        var message: ValueCallback<Uri>? = null
+        var messageArray: ValueCallback<Array<Uri>>? = null
+        val REQUEST_SELECT_FILE = 921
+        val FILECHOOSER_RESULTCODE = 72
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
                 if (messageArray == null)
                     return
                 messageArray!!.onReceiveValue(
-                    WebChromeClient.FileChooserParams.parseResult(
-                        resultCode,
-                        data
-                    )
+                        WebChromeClient.FileChooserParams.parseResult(
+                                resultCode,
+                                data
+                        )
                 )
                 messageArray = null
             }
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             if (null == message)
                 return
             val result =
-                if (data == null || resultCode != AppCompatActivity.RESULT_OK) null else data.data
+                    if (data == null || resultCode != AppCompatActivity.RESULT_OK) null else data.data
             message!!.onReceiveValue(result)
             message = null
         } else {
